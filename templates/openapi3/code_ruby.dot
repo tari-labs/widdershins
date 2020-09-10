@@ -1,3 +1,4 @@
+```ruby
 require 'rest-client'
 require 'json'
 
@@ -12,3 +13,4 @@ result = RestClient.{{=data.method.verb}} '{{=data.url}}',
 {{?}}
 
 p JSON.parse(result)
+```

@@ -1,3 +1,4 @@
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -76,7 +77,7 @@ public class HttpExample
       {{? }}
       {{? data.bodyParameter.refName === undefined  }}
       var result = await PutAsync(id, null, url);
-      {{? }}    
+      {{? }}
     }
 
     /// Performs a PUT Request
@@ -124,10 +125,11 @@ public class HttpExample
     /// Deserialize object from request response
     private async Task DeserializeObject(HttpResponseMessage response)
     {
-        //Read body 
+        //Read body
         string responseBody = await response.Content.ReadAsStringAsync();
 
         //Deserialize Body to object
         var result = JsonConvert.DeserializeObject(responseBody);
     }
 }
+```

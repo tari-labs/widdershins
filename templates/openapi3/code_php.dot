@@ -1,3 +1,4 @@
+```php
 <?php
 
 require 'vendor/autoload.php';
@@ -24,5 +25,4 @@ try {
     // handle exception or api errors.
     print_r($e->getMessage());
  }
-
- // ...
+```
