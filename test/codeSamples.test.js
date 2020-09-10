@@ -9,7 +9,7 @@ const sampleData = {
     header: {
         language_tabs: [
             'csharp',
-            { php: 'PHP' }
+            { id: "php", label: 'PHP' }
         ]
     },
     operation: clone(operation),
@@ -69,15 +69,15 @@ describe('getCodeSamples tests', () => {
         });
 
         it('should generate code samples from x-code-samples content', () => {
-            const expected = `\`\`\`csharp\n${xCodeSamples[0].source}\n\`\`\`\n\n` +
-                `\`\`\`php\n${xCodeSamples[1].source}\n\`\`\`\n\n` +
-                `\`\`\`sample\n${xCodeSamples[2].source}\n\`\`\`\n\n`;
+            const expected = `${xCodeSamples[0].source}` +
+                `${xCodeSamples[1].source}` +
+                `${xCodeSamples[2].source}`;
 
             assert.equal(result, expected);
         });
 
         it('should add unknown x-code-samples language to language_tabs', () => {
-            const expectedLanguageTabs = [].concat(sampleData.header.language_tabs, { sample: 'sample' });
+            const expectedLanguageTabs = [].concat(sampleData.header.language_tabs, { id: "sample", label: 'sample' });
 
             console.log(expectedLanguageTabs);
 
@@ -114,8 +114,8 @@ describe('getCodeSamples tests', () => {
         });
 
         it('should generate code samples using template files by default', () => {
-            const expected = `\`\`\`csharp\ncsharp-sample\n\`\`\`\n\n` +
-            `\`\`\`php\nphp-sample\n\`\`\`\n\n`;
+            const expected = `csharp-sample` +
+            `php-sample`;
 
             result = common.getCodeSamples(testData);
 
@@ -125,8 +125,8 @@ describe('getCodeSamples tests', () => {
         it('should use httpsnippet to generate code samples if it is active', () => {
             const testData = clone(sampleData);
             testData.options = { httpsnippet: true };
-            const expected = `\`\`\`csharp\nhttpsnippet-csharp--sample\n\`\`\`\n\n` +
-            `\`\`\`php\nhttpsnippet-php--sample\n\`\`\`\n\n`;
+            const expected = `httpsnippet-csharp--sample` +
+            `httpsnippet-php--sample`;
 
             result = common.getCodeSamples(testData);
 
@@ -135,8 +135,8 @@ describe('getCodeSamples tests', () => {
 
         it('should support specifying language custom target name', () => {
             testData.header.language_tabs[0] = 'javascript--nodejs';
-            const expected = `\`\`\`javascript--nodejs\nnodejs-sample\n\`\`\`\n\n` +
-            `\`\`\`php\nphp-sample\n\`\`\`\n\n`;
+            const expected = `nodejs-sample` +
+            `php-sample`;
 
             result = common.getCodeSamples(testData);
 
@@ -148,8 +148,8 @@ describe('getCodeSamples tests', () => {
             testData.options = { httpsnippet: true };
             testData.header.language_tabs[0] = 'javascript--nodejs';
             testData.options.language_clients = [ { 'javascript--nodejs': 'request' } ];
-            const expected = `\`\`\`javascript--nodejs\nhttpsnippet-nodejs-request-sample\n\`\`\`\n\n` +
-            `\`\`\`php\nhttpsnippet-php--sample\n\`\`\`\n\n`;
+            const expected = `httpsnippet-nodejs-request-sample` +
+            `httpsnippet-php--sample`;
 
             result = common.getCodeSamples(testData);
 
